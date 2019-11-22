@@ -1,0 +1,26 @@
+.pill {
+  @apply inline-block rounded-full px-3 py-1 text-sm font-semibold uppercase;
+}
+.pill-green {
+  @apply bg-green-500 text-white;
+}
+.pill-red {
+  @apply bg-red-500 text-white;
+}
+
+.icon {
+  @apply inline-block h-6 w-6 mr-2 fill-current;
+}
+.icon-green .primary {
+  @apply text-green-200;
+}
+.icon-green .secondary {
+  @apply text-green-500;
+}
+
+.icon-red .primary {
+  @apply text-red-200;
+}
+.icon-red .secondary {
+  @apply text-red-500;
+}
