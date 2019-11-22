@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "outDir": "build"
+  },
+  "include": [
+    "./src/*.ts",
+    "./src/**/*.ts",
+    "./node_modules/@cloudflare/workers-types/index.d.ts"
+  ],
+  "typeAcquisition": {
+    "include": ["jest"]
+  }
+}

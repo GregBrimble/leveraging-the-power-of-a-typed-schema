@@ -1,36 +1,49 @@
 {
   "name": "leveraging-the-power-of-a-typed-schema",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@types/jest": "24.0.23",
-    "@types/node": "12.12.11",
-    "@types/react": "16.9.12",
-    "@types/react-dom": "16.9.4",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-scripts": "3.2.0",
-    "typescript": "3.7.2"
-  },
+  "version": "1.0.0",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "postinstall": "lerna bootstrap",
+    "prebuild": "lerna run --scope client build",
+    "build": "wrangler build",
+    "clean": "rimraf worker",
+    "clean:node": "rimraf node_modules package-lock.json",
+    "test:client": "CI=true lerna run --scope client test",
+    "test:server": "CI=true lerna run --scope server test",
+    "test": "CI=true lerna run test",
+    "start": "lerna run start --parallel",
+    "predeploy": "npm run prebuild",
+    "deploy": "wrangler publish"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "keywords": [
+    "GraphQL",
+    "JavaScript",
+    "React",
+    "TypeScript",
+    "Storybook",
+    "Apollo",
+    "Atomic Design",
+    "Tailwind CSS"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:GregBrimble/leveraging-the-power-of-a-typed-schema.git"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "author": {
+    "name": "Greg Brimble",
+    "email": "developer@gregbrimble.com",
+    "url": "https://gregbrimble.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GregBrimble/leveraging-the-power-of-a-typed-schema/issues"
+  },
+  "homepage": "https://github.com/GregBrimble/leveraging-the-power-of-a-typed-schema#readme",
+  "devDependencies": {
+    "@cloudflare/wrangler": "^1.6.0",
+    "concurrently": "^5.0.1",
+    "lerna": "^3.19.0",
+    "rimraf": "^3.0.0",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.3"
   }
 }
