@@ -43,11 +43,11 @@
   },
   "homepage": "https://github.com/GregBrimble/leveraging-the-power-of-a-typed-schema#readme",
   "devDependencies": {
-    "@cloudflare/wrangler": "^1.6.0",
-    "concurrently": "^5.0.1",
-    "lerna": "^3.19.0",
-    "rimraf": "^3.0.0",
-    "ts-loader": "^6.2.1",
-    "typescript": "^3.7.3"
+    "@cloudflare/wrangler": "1.6.0",
+    "concurrently": "5.0.1",
+    "lerna": "3.19.0",
+    "rimraf": "3.0.0",
+    "ts-loader": "6.2.1",
+    "typescript": "3.7.3"
   }
 }
