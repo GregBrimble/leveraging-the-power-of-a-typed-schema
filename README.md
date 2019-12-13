@@ -32,11 +32,11 @@ Please consider giving this project a <a href="https://github.com/GregBrimble/le
 - ☁ It's full-stack serverless!
 
   This entire project is hosted on [Cloudflare's edge](https://workers.cloudflare.com/), which means:
-    
-    - ⚡ Everything is blazing fast
-    - 💸 It's cheap
-    - 🎈 It scales automatically
-    - 💻 Development is really easy
+
+  - ⚡ Everything is blazing fast
+  - 💸 It's cheap
+  - 🎈 It scales automatically
+  - 💻 Development is really easy
 
 - 🤖 Deployment is automated with [GitHub Actions](https://github.com/features/actions).
 
@@ -50,10 +50,52 @@ cd leveraging-the-power-of-a-typed-schema
 npm install
 ```
 
+## Development
+
+```sh
+npm start
+```
+
+The GraphQL server should be available at http://localhost:4000/ and the front-end should be available at http://localhost:3000/.
+
+> Note: If the front-end first opens with a empty page, refresh after a couple of seconds. You've just beat the build process.
+
+Optionally, to additionally run with Storybook (available at http://localhost:3001/):
+
+```sh
+npm run start:storybook
+```
+
+> Note: Storybook can take up to one minute to boot-up.
+
+And if you only need the GraphQL server:
+
+```sh
+npm run start:graphql
+```
+
+### Testing
+
+```sh
+npm test
+```
+
+### Linting
+
+```sh
+npm run lint
+```
+
+And to automatically fix most errors:
+
+```sh
+npm run format
+```
+
 ## Deployment
 
 1. Set your [Cloudflare Account ID](https://developers.cloudflare.com/workers/reference/storage/api/) in `wrangler.toml`.
 1. Create a [Cloudflare API Token](https://support.cloudflare.com/hc/en-us/articles/200167836-Managing-API-Tokens-and-Keys#12345680) using the `Edit Cloudflare Workers` template, and substitute it below:
-    ```sh
-    CF_API_TOKEN=xxx npm run deploy
-    ```
+   ```sh
+   CF_API_TOKEN=xxx npm run deploy
+   ```

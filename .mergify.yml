@@ -1,6 +1,7 @@
 pull_request_rules:
   - name: Automatically merge Greenkeeper PRs on CI success
     conditions:
+      - status-success=Linting
       - status-success=Client
       - status-success=Server
       - status-success=greenkeeper/verify

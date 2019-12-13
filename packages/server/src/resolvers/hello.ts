@@ -1,17 +1,17 @@
-import { gql } from "apollo-server-cloudflare";
+import { gql } from 'apollo-server-cloudflare'
 
 const typeDefs = gql`
   extend type Query {
     hello: String!
   }
-`;
+`
 
-const hello = () => "Hello, world!";
+const hello = (): string => `Hello, world!`
 
 const resolvers = {
   Query: {
-    hello: () => "Hello, world!"
-  }
-};
+    hello,
+  },
+}
 
-export { typeDefs, resolvers };
+export { typeDefs, resolvers }

@@ -7,7 +7,7 @@ const Test: React.FC = () => {
   const { loading, error, data } = useQuery(
     gql`
       {
-        helloe
+        hello
       }
     `
   );

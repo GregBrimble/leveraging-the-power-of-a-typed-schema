@@ -47,7 +47,7 @@ const DateTimeInput: React.FC<DateTimeInputProps> = ({
       value = constructDate(date, time, timeZone);
     }
     safelyOnChange(value, onChange);
-  }, [date, time, timeZone]);
+  }, [date, includeTime, onChange, time, timeZone]);
 
   useEffect(() => {
     if (date !== undefined && time !== undefined) {

@@ -10,7 +10,11 @@
     "test:client": "CI=true lerna run --scope client test",
     "test:server": "CI=true lerna run --scope server test",
     "test": "CI=true lerna run test",
+    "lint": "lerna run lint",
+    "format": "lerna run format",
     "start": "lerna run start --parallel",
+    "start:storybook": "concurrently \"npm run start\" \"cd packages/client; npm run storybook\"",
+    "start:graphql": "lerna run --scope server start",
     "predeploy": "npm run prebuild",
     "deploy": "wrangler publish"
   },

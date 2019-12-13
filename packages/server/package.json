@@ -4,15 +4,23 @@
   "scripts": {
     "clean:node": "rimraf node_modules package-lock.json",
     "start": "NODE_ENV=development ts-node src/run.ts",
+    "lint": "eslint 'src/**/*.ts'",
+    "format": "npm run lint -- --fix",
     "test": "jest"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^1.0.6",
     "@types/jest": "^24.0.23",
+    "@typescript-eslint/eslint-plugin": "^2.11.0",
+    "@typescript-eslint/parser": "^2.11.0",
     "apollo-server": "^2.9.13",
     "apollo-server-testing": "^2.9.13",
     "babel-jest": "^24.9.0",
+    "eslint": "^6.7.2",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-prettier": "^3.1.1",
     "jest": "^24.9.0",
+    "prettier": "^1.19.1",
     "rimraf": "^3.0.0",
     "ts-jest": "^24.2.0",
     "ts-node": "^8.5.4",

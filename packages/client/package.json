@@ -27,7 +27,9 @@
     "clean:node": "rimraf node_modules package-lock.json",
     "clean:styles": "rimraf src/styles.css",
     "start": "concurrently \"npm run build:styles -- --watch\" \"react-scripts start\"",
-    "storybook": "concurrently \"npm run build:styles -- --watch\" \"start-storybook\"",
+    "storybook": "concurrently \"npm run build:styles -- --watch\" \"start-storybook -p 3001\"",
+    "lint": "eslint --ext js,ts,tsx src",
+    "format": "npm run lint -- --fix",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
