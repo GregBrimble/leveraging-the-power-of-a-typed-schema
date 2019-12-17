@@ -14,7 +14,7 @@
     "@types/lodash": "^4.14.149",
     "@typescript-eslint/eslint-plugin": "2.12.0",
     "@typescript-eslint/parser": "2.12.0",
-    "apollo-server": "2.9.13",
+    "apollo-server": "2.9.14",
     "apollo-server-testing": "2.9.14",
     "babel-jest": "24.9.0",
     "eslint": "6.7.2",
