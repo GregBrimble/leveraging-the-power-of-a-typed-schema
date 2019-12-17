@@ -1,7 +1,8 @@
 import React from "react";
 import { urlToString } from "../../../utils/url";
+import { TypeAttributes } from "./TypeAttributes";
 
-interface URLTypeProps {
+interface URLTypeProps extends TypeAttributes {
   value: URL;
 }
 
@@ -10,7 +11,7 @@ const isExternal = (url: URL): boolean => {
   return url.hostname !== windowURL.hostname;
 };
 
-const URLType: React.FC<URLTypeProps> = ({ value, children }) => {
+const URLType: React.FC<URLTypeProps> = ({ value, field, children }) => {
   const otherProps = isExternal(value)
     ? {
         target: "_blank",
@@ -20,7 +21,7 @@ const URLType: React.FC<URLTypeProps> = ({ value, children }) => {
 
   return (
     <a href={urlToString(value)} className={"underline"} {...otherProps}>
-      {children}
+      {field.name?.value}
     </a>
   );
 };

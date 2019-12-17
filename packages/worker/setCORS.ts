@@ -1,12 +1,3 @@
-interface CORSOptions {
-  allowOrigin?: string
-  exposeHeaders?: string
-  maxAge?: string
-  allowCredentials?: string
-  allowMethods?: string
-  allowHeaders?: string
-}
-
 export const setCORS = (
   response: Response,
   {
@@ -16,7 +7,7 @@ export const setCORS = (
     allowCredentials = `false`,
     allowMethods = `GET, POST`,
     allowHeaders = `*`,
-  }: CORSOptions = {}
+  } = {}
 ): void => {
   response.headers.set(`Access-Control-Allow-Origin`, allowOrigin)
   response.headers.set(`Access-Control-Expose-Headers`, exposeHeaders)

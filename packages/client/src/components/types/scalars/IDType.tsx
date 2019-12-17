@@ -1,6 +1,7 @@
 import React from "react";
+import { TypeAttributes } from "./TypeAttributes";
 
-interface IDTypeProps {
+interface IDTypeProps extends TypeAttributes {
   value: string;
 }
 

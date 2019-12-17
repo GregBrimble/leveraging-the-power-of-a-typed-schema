@@ -4,10 +4,10 @@ webpack_config = "./packages/worker/webpack.config.js"
 account_id = "5a883b414d4090a1442b20361f3c43a9"
 workers_dev = true
 
-# [site]
-# bucket = "./packages/client/build"
-# entry-point = "./packages/worker"
+[site]
+bucket = "./packages/client/build"
+entry-point = "./packages/worker"
 
-kv-namespaces = [
-  { binding = "__STATIC_CONTENT", id = "0c87c1d567a94fe2a4e4b820daf17d60" }
-]
+# kv-namespaces = [
+#   { binding = "__STATIC_CONTENT", id = "0c87c1d567a94fe2a4e4b820daf17d60" }
+# ]

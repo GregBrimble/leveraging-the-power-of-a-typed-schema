@@ -1,28 +1,30 @@
 import React from "react";
 import { ApolloProvider, useQuery } from "@apollo/react-hooks";
+import { SchemaProvider } from "./introspection/SchemaProvider";
+import { DebugSchema } from "./components/debug/DebugSchema";
 import { client } from "./client";
-import gql from "graphql-tag";
+import { useData } from "./introspection/useData";
+import { RenderTypedData } from "./introspection/RenderTypedData";
+import { gql } from "apollo-boost";
 
-const Test: React.FC = () => {
-  const { loading, error, data } = useQuery(
-    gql`
-      {
-        hello
-      }
-    `
+const Demo: React.FC = () => {
+  const data = useData(client);
+
+  if (data.loading) return <p>Loading...</p>;
+  if (data.error) return <p>Execution Error: {data.error.toString()}</p>;
+
+  return (
+    <RenderTypedData data={data.data} document={data.query} selector="debug" />
   );
-  if (loading) return <span>Loading</span>;
-  if (error) return <span>Error: {error.message}</span>;
-
-  return <span>{data.hello}</span>;
 };
 
 const App: React.FC = () => {
   return (
     <ApolloProvider client={client}>
-      <div className="App">
-        <Test />
-      </div>
+      <SchemaProvider client={client}>
+        <DebugSchema />
+        <Demo />
+      </SchemaProvider>
     </ApolloProvider>
   );
 };

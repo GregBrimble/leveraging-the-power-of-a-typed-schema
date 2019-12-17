@@ -1,7 +1,8 @@
 import React from "react";
 import { dateToString } from "../../../utils/date";
+import { TypeAttributes } from "./TypeAttributes";
 
-interface DateTimeTypeProps {
+interface DateTimeTypeProps extends TypeAttributes {
   value: Date;
   format?: string;
 }

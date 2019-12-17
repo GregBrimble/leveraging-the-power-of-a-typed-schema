@@ -1,7 +1,8 @@
 import React from "react";
 import { intToString } from "../../../utils/int";
+import { TypeAttributes } from "./TypeAttributes";
 
-interface IntTypeProps {
+interface IntTypeProps extends TypeAttributes {
   value: number;
 }
 

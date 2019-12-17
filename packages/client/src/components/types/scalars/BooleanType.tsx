@@ -2,8 +2,9 @@ import React from "react";
 import { ReactComponent as TrueIconSVG } from "../../../assets/refactoring-ui/icon-check.svg";
 import { ReactComponent as FalseIconSVG } from "../../../assets/refactoring-ui/icon-close-circle.svg";
 import { booleanToString } from "../../../utils/boolean";
+import { TypeAttributes } from "./TypeAttributes";
 
-interface BooleanTypeProps {
+interface BooleanTypeProps extends TypeAttributes {
   value: boolean;
   as?: "text" | "icon" | "pill";
 }

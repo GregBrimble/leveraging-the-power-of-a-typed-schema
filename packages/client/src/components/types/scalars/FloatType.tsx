@@ -1,7 +1,8 @@
 import React from "react";
 import { floatToString } from "../../../utils/float";
+import { TypeAttributes } from "./TypeAttributes";
 
-interface FloatTypeProps {
+interface FloatTypeProps extends TypeAttributes {
   value: number;
   fractionDigits?: number;
 }

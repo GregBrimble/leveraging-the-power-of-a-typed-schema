@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { SelectedInputAttributes } from "./scalars/InputAttributes";
+import React from "react";
 
 // TODO: Support more timezones
 const timeZones = new Set([
