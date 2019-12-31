@@ -63,7 +63,7 @@
     "@types/react": "16.9.17",
     "@types/react-dom": "16.9.4",
     "babel-loader": "8.0.6",
-    "concurrently": "5.0.1",
+    "concurrently": "5.0.2",
     "react-docgen-typescript-loader": "3.6.0",
     "ts-loader": "6.2.1"
   }
