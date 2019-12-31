@@ -49,7 +49,7 @@ export const NodeTypeMapProvider: React.FC<{
         )
       });
     }
-  }, [schema]);
+  }, [operationDefinitionNode, schema]);
 
   return (
     <NodeTypeMapContext.Provider value={nodeTypeMap}>
