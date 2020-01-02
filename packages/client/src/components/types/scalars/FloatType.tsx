@@ -1,14 +1,14 @@
 import React from "react";
-import { floatToString } from "../../../utils/float";
+import { floatToString, floatFromString } from "../../../utils/float";
 import { TypeAttributes } from "./TypeAttributes";
 
 interface FloatTypeProps extends TypeAttributes {
-  value: number;
+  data: number;
   fractionDigits?: number;
 }
 
-const FloatType: React.FC<FloatTypeProps> = ({ value, fractionDigits = 2 }) => (
-  <>{floatToString(value, fractionDigits)}</>
+const FloatType: React.FC<FloatTypeProps> = ({ data, fractionDigits = 2 }) => (
+  <>{floatToString(data, fractionDigits)}</>
 );
 
 export default FloatType;

@@ -6,6 +6,8 @@ import {
 import { handleRequest as graphQL } from '../server/src/cloudflare'
 import { setCORS } from './setCORS'
 
+const DEBUG_MODE = true
+
 const graphQLOptions = {
   cors: {},
 }
@@ -23,7 +25,7 @@ const handleGraphQLRequest = async ({
 
 const assetOptions = {
   cacheControl: {
-    bypassCache: true,
+    bypassCache: DEBUG_MODE,
   },
   mapRequestToAsset: serveSinglePageApp,
 }
@@ -32,10 +34,13 @@ const handleAssetRequest = async (event: FetchEvent): Promise<Response> => {
   try {
     return await getAssetFromKV(event, assetOptions)
   } catch (e) {
-    return new Response(e.message || e.toString(), {
-      status: 500,
-      headers: { 'Content-Type': `text/plain` },
-    })
+    return new Response(
+      DEBUG_MODE ? `Internal Server Error` : e.message || e.toString(),
+      {
+        status: 500,
+        headers: { 'Content-Type': `text/plain` },
+      }
+    )
   }
 }
 

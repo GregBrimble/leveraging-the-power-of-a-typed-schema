@@ -9,7 +9,13 @@ import {
   typeDefs as scalarsTypeDefs,
   resolvers as scalarsResolvers,
   mocks as scalarsMocks,
-} from './resolvers/debug/types/scalars'
+} from './schema/debug/types/scalars'
+import { typeDefs as listDemoTypeDefs } from './schema/debug/lists'
+import { typeDefs as connectionsTypeDefs } from './schema/connections'
+import {
+  typeDefs as contactTypeDefs,
+  resolvers as contactResolvers,
+} from './schema/contact'
 
 const query = gql`
   type Query {
@@ -24,8 +30,14 @@ const resolvers = {
 }
 
 const schema = makeExecutableSchema({
-  typeDefs: [query, scalarsTypeDefs],
-  resolvers: merge(resolvers, scalarsResolvers),
+  typeDefs: [
+    query,
+    connectionsTypeDefs,
+    scalarsTypeDefs,
+    listDemoTypeDefs,
+    contactTypeDefs,
+  ],
+  resolvers: merge(resolvers, scalarsResolvers, contactResolvers),
 })
 
 addMockFunctionsToSchema({

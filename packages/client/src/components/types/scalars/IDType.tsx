@@ -2,11 +2,11 @@ import React from "react";
 import { TypeAttributes } from "./TypeAttributes";
 
 interface IDTypeProps extends TypeAttributes {
-  value: string;
+  data: string;
 }
 
-const IDType: React.FC<IDTypeProps> = ({ value }) => (
-  <span hidden={true}>{value}</span>
+const IDType: React.FC<IDTypeProps> = ({ data }) => (
+  <span hidden={true}>{data}</span>
 );
 
 export default IDType;

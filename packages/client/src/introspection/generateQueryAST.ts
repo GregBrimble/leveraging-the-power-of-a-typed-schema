@@ -10,7 +10,8 @@ import {
   SelectionSetNode,
   GraphQLField,
   GraphQLType,
-  GraphQLFieldMap
+  GraphQLFieldMap,
+  VariableDefinitionNode
 } from "graphql";
 
 export const getFields = (
@@ -26,7 +27,10 @@ export const getFields = (
   return Object.keys(fields).length !== 0 ? fields : undefined;
 };
 
-const buildSelectionSet = (type: GraphQLType): SelectionSetNode | undefined => {
+const buildSelectionSet = (
+  type: GraphQLType,
+  namePrefix = ""
+): SelectionSetNode | undefined => {
   const fields = getFields(type);
   if (fields === undefined) return;
 
@@ -38,9 +42,62 @@ const buildSelectionSet = (type: GraphQLType): SelectionSetNode | undefined => {
         kind: "Name",
         value: field.name
       },
-      selectionSet: buildSelectionSet(field.type)
+      selectionSet: buildSelectionSet(field.type, namePrefix + field.name),
+      arguments: field.args.map(arg => ({
+        kind: "Argument",
+        name: {
+          kind: "Name",
+          value: arg.name
+        },
+        value: {
+          kind: "Variable",
+          name: {
+            kind: "Name",
+            value: namePrefix + field.name + arg.name
+          }
+        }
+      }))
     }))
   };
+};
+
+const buildVariableDefinitions = (
+  type: GraphQLType,
+  namePrefix = ""
+): VariableDefinitionNode[] => {
+  console.log((type as any).name);
+  const variableDefinitions: VariableDefinitionNode[] = [];
+  const fields = getFields(type) || [];
+
+  for (const field of Object.values(fields)) {
+    for (const arg of field.args) {
+      const namedType = getNamedType(arg.type);
+      variableDefinitions.push({
+        kind: "VariableDefinition",
+        variable: {
+          kind: "Variable",
+          name: {
+            kind: "Name",
+            value: namePrefix + field.name + arg.name
+          }
+        },
+        // TODO: Support non-nullable, and list types
+        type: {
+          kind: "NamedType",
+          name: {
+            kind: "Name",
+            value: namedType.name
+          }
+        }
+      });
+    }
+
+    variableDefinitions.push(
+      ...buildVariableDefinitions(field.type, namePrefix + field.name)
+    );
+  }
+
+  return variableDefinitions;
 };
 
 export const generateQueryAST = (schema: GraphQLSchema): DocumentNode => {
@@ -58,7 +115,8 @@ export const generateQueryAST = (schema: GraphQLSchema): DocumentNode => {
       {
         kind: "OperationDefinition",
         operation: "query",
-        selectionSet: buildSelectionSet(queryType) as SelectionSetNode
+        selectionSet: buildSelectionSet(queryType) as SelectionSetNode,
+        variableDefinitions: buildVariableDefinitions(queryType)
       }
     ]
   };

@@ -35,7 +35,7 @@ type Data = LoadingData | ErroredData | LoadedData;
 const sanitizeData = (key: string, value: any) =>
   key === "__typename" ? undefined : value;
 
-export const useData = (client: ApolloClient<any>) => {
+export const useData = (client: ApolloClient<any>, query?: DocumentNode) => {
   const schema = useSchema();
   const [data, setData] = useState<Data>({
     loading: true
@@ -45,11 +45,12 @@ export const useData = (client: ApolloClient<any>) => {
     (async () => {
       if (schema.schema) {
         try {
-          const query = generateQueryAST(schema.schema);
-          const { data } = await client.query({ query });
+          query = query !== undefined ? query : generateQueryAST(schema.schema);
+          console.log(query);
+          const { data } = await client.query({ query: query });
           setData({
             loading: false,
-            query,
+            query: query,
             data: JSON.parse(JSON.stringify(data, sanitizeData)),
             schema: schema.schema
           });
@@ -58,7 +59,7 @@ export const useData = (client: ApolloClient<any>) => {
         }
       }
     })();
-  }, [schema, client]);
+  }, [schema, client, query]);
 
   return data;
 };

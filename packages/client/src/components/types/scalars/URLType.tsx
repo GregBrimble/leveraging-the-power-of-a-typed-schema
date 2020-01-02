@@ -1,9 +1,9 @@
 import React from "react";
-import { urlToString } from "../../../utils/url";
+import { urlToString, urlFromString } from "../../../utils/url";
 import { TypeAttributes } from "./TypeAttributes";
 
 interface URLTypeProps extends TypeAttributes {
-  value: URL;
+  data: string;
 }
 
 const isExternal = (url: URL): boolean => {
@@ -11,7 +11,8 @@ const isExternal = (url: URL): boolean => {
   return url.hostname !== windowURL.hostname;
 };
 
-const URLType: React.FC<URLTypeProps> = ({ value, field, children }) => {
+const URLType: React.FC<URLTypeProps> = ({ data, field }) => {
+  const value = urlFromString(data);
   const otherProps = isExternal(value)
     ? {
         target: "_blank",

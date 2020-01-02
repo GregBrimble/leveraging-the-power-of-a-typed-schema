@@ -5,7 +5,7 @@ import { booleanToString } from "../../../utils/boolean";
 import { TypeAttributes } from "./TypeAttributes";
 
 interface BooleanTypeProps extends TypeAttributes {
-  value: boolean;
+  data: boolean;
   as?: "text" | "icon" | "pill";
 }
 
@@ -26,14 +26,14 @@ const FalseIcon: React.FC = () => (
   </Icon>
 );
 
-const BooleanType: React.FC<BooleanTypeProps> = ({ value, as = "text" }) => {
+const BooleanType: React.FC<BooleanTypeProps> = ({ data, as = "text" }) => {
   switch (as) {
     case "text":
-      return <>{booleanToString(value)}</>;
+      return <>{booleanToString(data)}</>;
     case "icon":
-      return value ? <TrueIcon /> : <FalseIcon />;
+      return data ? <TrueIcon /> : <FalseIcon />;
     case "pill":
-      return value ? <TruePill /> : <FalsePill />;
+      return data ? <TruePill /> : <FalsePill />;
   }
 };
 

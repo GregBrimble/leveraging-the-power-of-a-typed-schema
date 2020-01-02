@@ -1,13 +1,11 @@
 import React from "react";
-import { intToString } from "../../../utils/int";
+import { intToString, intFromString } from "../../../utils/int";
 import { TypeAttributes } from "./TypeAttributes";
 
 interface IntTypeProps extends TypeAttributes {
-  value: number;
+  data: number;
 }
 
-const IntType: React.FC<IntTypeProps> = ({ value }) => (
-  <>{intToString(value)}</>
-);
+const IntType: React.FC<IntTypeProps> = ({ data }) => <>{intToString(data)}</>;
 
 export default IntType;

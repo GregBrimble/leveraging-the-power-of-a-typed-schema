@@ -2,11 +2,9 @@ import React from "react";
 import { TypeAttributes } from "./TypeAttributes";
 
 interface StringTypeProps extends TypeAttributes {
-  value: string;
+  data: string;
 }
 
-const StringType: React.FC<StringTypeProps> = ({ value }) => (
-  <span>{value}</span>
-);
+const StringType: React.FC<StringTypeProps> = ({ data }) => <span>{data}</span>;
 
 export default StringType;
