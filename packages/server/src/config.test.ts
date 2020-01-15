@@ -1,8 +1,9 @@
-import { server } from './config'
+import { config } from './config'
 import { createTestClient } from 'apollo-server-testing'
 import { gql } from 'apollo-server-cloudflare'
+import { ApolloServer } from 'apollo-server'
 
-const { query } = createTestClient(server)
+const { query } = createTestClient(new ApolloServer(config))
 
 describe(`the universe`, () => {
   it(`can do math`, () => {
