@@ -52,7 +52,7 @@ export const resolvers = {
       let filteredUsers = users
 
       if (filter !== undefined) {
-        if ('firstNameFilter' in filter)
+        if (`firstNameFilter` in filter)
           filteredUsers = filteredUsers.filter(
             user =>
               user.firstName
@@ -60,9 +60,9 @@ export const resolvers = {
                 .indexOf(filter.firstNameFilter.toLowerCase()) > -1
           )
 
-        if ('isAlive' in filter)
+        if (`isAlive` in filter)
           filteredUsers = filteredUsers.filter(
-            user => user.status === (filter.isAlive ? 'Alive' : 'Deceased')
+            user => user.status === (filter.isAlive ? `Alive` : `Deceased`)
           )
       }
 
@@ -72,5 +72,5 @@ export const resolvers = {
 }
 
 export const mocks = {
-  ImageURL: () => 'https://via.placeholder.com/128',
+  ImageURL: () => `https://via.placeholder.com/128`,
 }

@@ -47,7 +47,7 @@ const Connection: React.FC<ConnectionProps<any>> = ({ data, field }) => {
       });
       setVariables({ ...variables, ...args });
     }
-  }, [connectionArguments, field]);
+  }, [connectionArguments, field, setVariables, variables]);
 
   if (nodeTypeMap.loading) return <LoadingRenderer />;
   const nodeField = getField(field, "edges.node");
