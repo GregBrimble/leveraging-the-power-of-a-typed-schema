@@ -26,7 +26,7 @@ const FalseIcon: React.FC = () => (
   </Icon>
 );
 
-const BooleanType: React.FC<BooleanTypeProps> = ({ data, as = "text" }) => {
+const BooleanType: React.FC<BooleanTypeProps> = ({ data, as = "icon" }) => {
   switch (as) {
     case "text":
       return <>{booleanToString(data)}</>;

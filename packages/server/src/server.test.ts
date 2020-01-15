@@ -1,4 +1,4 @@
-import { server } from './server'
+import { server } from './config'
 import { createTestClient } from 'apollo-server-testing'
 import { gql } from 'apollo-server-cloudflare'
 

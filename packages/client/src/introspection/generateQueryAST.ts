@@ -65,7 +65,6 @@ const buildVariableDefinitions = (
   type: GraphQLType,
   namePrefix = ""
 ): VariableDefinitionNode[] => {
-  console.log((type as any).name);
   const variableDefinitions: VariableDefinitionNode[] = [];
   const fields = getFields(type) || [];
 

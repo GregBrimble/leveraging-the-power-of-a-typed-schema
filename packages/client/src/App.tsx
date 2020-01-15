@@ -6,19 +6,15 @@ import { client } from "./client";
 import { useData } from "./introspection/useData";
 import { RenderTypedData } from "./introspection/rendering/RenderTypedData";
 
+import "./styles.css";
+
 const Demo: React.FC = () => {
   const data = useData(client);
 
   if (data.loading) return <p>Loading...</p>;
   if (data.error) return <p>Execution Error: {data.error.toString()}</p>;
 
-  return (
-    <RenderTypedData
-      data={data.data}
-      document={data.query}
-      selector="contacts"
-    />
-  );
+  return <RenderTypedData data={data.data} document={data.query} />;
 };
 
 const App: React.FC = () => {

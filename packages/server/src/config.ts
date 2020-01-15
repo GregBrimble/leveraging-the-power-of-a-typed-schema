@@ -1,5 +1,4 @@
 import {
-  ApolloServer as CloudflareApolloServer,
   gql,
   makeExecutableSchema,
   addMockFunctionsToSchema,
@@ -11,11 +10,12 @@ import {
   mocks as scalarsMocks,
 } from './schema/debug/types/scalars'
 import { typeDefs as listDemoTypeDefs } from './schema/debug/lists'
-import { typeDefs as connectionsTypeDefs } from './schema/connections'
+import { typeDefs as relayTypeDefs } from './schema/relay'
 import {
   typeDefs as contactTypeDefs,
   resolvers as contactResolvers,
-} from './schema/contact'
+  mocks as contactMocks,
+} from './schema/user'
 
 const query = gql`
   type Query {
@@ -32,7 +32,7 @@ const resolvers = {
 const schema = makeExecutableSchema({
   typeDefs: [
     query,
-    connectionsTypeDefs,
+    relayTypeDefs,
     scalarsTypeDefs,
     listDemoTypeDefs,
     contactTypeDefs,
@@ -42,20 +42,11 @@ const schema = makeExecutableSchema({
 
 addMockFunctionsToSchema({
   schema,
-  mocks: merge(scalarsMocks),
+  mocks: merge(scalarsMocks, contactMocks),
   preserveResolvers: true,
 })
 
-const config = {
+export const config = {
   schema,
   introspection: true,
 }
-
-let server = new CloudflareApolloServer(config)
-
-if (process.env.NODE_ENV === `development`) {
-  const { ApolloServer } = require(`apollo-server`) // eslint-disable-line @typescript-eslint/no-var-requires
-  server = new ApolloServer(config)
-}
-
-export { server }
