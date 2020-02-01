@@ -6,6 +6,8 @@ interface IntTypeProps extends TypeAttributes {
   data: number;
 }
 
-const IntType: React.FC<IntTypeProps> = ({ data }) => <>{intToString(data)}</>;
+const IntType: React.FC<IntTypeProps> = ({ data }) => (
+  <div>{intToString(data)}</div>
+);
 
 export default IntType;

@@ -34,7 +34,7 @@ const schema = makeExecutableSchema({
     query,
     relayTypeDefs,
     scalarsTypeDefs,
-    listDemoTypeDefs,
+    // listDemoTypeDefs,
     contactTypeDefs,
   ],
   resolvers: merge(resolvers, scalarsResolvers, contactResolvers),

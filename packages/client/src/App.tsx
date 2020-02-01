@@ -1,6 +1,6 @@
 import React from "react";
 import { ApolloProvider } from "@apollo/react-hooks";
-import { SchemaProvider } from "./introspection/SchemaProvider";
+import { SchemaProvider } from "./introspection/schema/SchemaProvider";
 import { DebugSchema } from "./components/debug/DebugSchema";
 import { client } from "./client";
 import { useData } from "./introspection/useData";

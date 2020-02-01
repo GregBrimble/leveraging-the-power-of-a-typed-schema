@@ -6,16 +6,16 @@ import React, {
   useContext,
   Dispatch
 } from "react";
-import { useSchema } from "./SchemaProvider";
+import { useSchema } from "../schema/SchemaProvider";
 import {
   ASTNode,
   GraphQLType,
   OperationDefinitionNode,
   FieldNode
 } from "graphql";
-import { generateNodeTypeMapFromSchema } from "./generateNodeTypeMap";
-import { getNodeDataName } from "./tools";
-import { RenderFieldProps } from "./rendering/RenderTypedData";
+import { generateASTNodeGraphQLFieldMapFromSchema } from "../generateASTNodeGraphQLFieldMap";
+import { getNodeDataName } from "../tools";
+import { RenderFieldProps } from "./RenderTypedData";
 
 interface _NodeTypeMap {
   loading: boolean;
@@ -87,7 +87,7 @@ export const RenderOptionsProvider: React.FC<{
       setRenderOptions({
         nodeTypeMap: {
           loading: false,
-          map: generateNodeTypeMapFromSchema(
+          map: generateASTNodeGraphQLFieldMapFromSchema(
             schema.schema,
             operationDefinitionNode
           )

@@ -50,6 +50,14 @@ cd leveraging-the-power-of-a-typed-schema
 npm install
 ```
 
+## Presentation
+
+```sh
+npm run present
+```
+
+The MDX Deck should be available at http://localhost:8000/.
+
 ## Development
 
 ```sh

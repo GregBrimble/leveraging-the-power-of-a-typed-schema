@@ -8,7 +8,7 @@ interface DateTimeTypeProps extends TypeAttributes {
 }
 
 const DateTimeType: React.FC<DateTimeTypeProps> = ({ data, format }) => (
-  <>{dateToString(dateFromString(data), format)}</>
+  <div>{dateToString(dateFromString(data), format)}</div>
 );
 
 export default DateTimeType;

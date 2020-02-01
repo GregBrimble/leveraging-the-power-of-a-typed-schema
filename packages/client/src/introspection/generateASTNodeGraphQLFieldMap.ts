@@ -6,9 +6,9 @@ import {
   GraphQLType,
   ASTNode
 } from "graphql";
-import { getFields } from "./generateQueryAST";
+import { getFields } from "./generation/generateQueryAST";
 
-const generateNodeTypeMap = (
+const generateASTNodeGraphQLFieldMap = (
   root: ASTNode,
   type: GraphQLType
 ): Map<ASTNode, GraphQLType> => {
@@ -38,7 +38,7 @@ const generateNodeTypeMap = (
   return nodeTypeMap;
 };
 
-export const generateNodeTypeMapFromSchema = (
+export const generateASTNodeGraphQLFieldMapFromSchema = (
   schema: GraphQLSchema,
   operationDefinitionNode: OperationDefinitionNode
 ) => {
@@ -56,5 +56,5 @@ export const generateNodeTypeMapFromSchema = (
       throw new Error("Subscriptions aren't yet supported.");
   }
 
-  return generateNodeTypeMap(operationDefinitionNode, type);
+  return generateASTNodeGraphQLFieldMap(operationDefinitionNode, type);
 };

@@ -16,7 +16,8 @@
     "start:storybook": "concurrently \"npm run start\" \"cd packages/client; npm run storybook\"",
     "start:graphql": "lerna run --scope server start",
     "predeploy": "npm run prebuild",
-    "deploy": "wrangler publish"
+    "deploy": "wrangler publish",
+    "present": "mdx-deck slides.mdx"
   },
   "keywords": [
     "GraphQL",
@@ -44,10 +45,11 @@
   "homepage": "https://github.com/GregBrimble/leveraging-the-power-of-a-typed-schema#readme",
   "devDependencies": {
     "@cloudflare/wrangler": "1.6.0",
-    "concurrently": "5.0.2",
-    "lerna": "3.20.1",
+    "concurrently": "5.1.0",
+    "lerna": "3.20.2",
+    "mdx-deck": "^3.0.13",
     "rimraf": "3.0.0",
     "ts-loader": "6.2.1",
-    "typescript": "3.7.4"
+    "typescript": "3.7.5"
   }
 }

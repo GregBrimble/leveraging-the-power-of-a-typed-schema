@@ -9,12 +9,10 @@ interface BooleanTypeProps extends TypeAttributes {
   as?: "text" | "icon" | "pill";
 }
 
-const TruePill: React.FC = () => <span className="pill pill-green">True</span>;
-const FalsePill: React.FC = () => <span className="pill pill-red">False</span>;
+const TruePill: React.FC = () => <div className="pill pill-green">True</div>;
+const FalsePill: React.FC = () => <div className="pill pill-red">False</div>;
 
-const Icon: React.FC = ({ children }) => (
-  <span className="icon">{children}</span>
-);
+const Icon: React.FC = ({ children }) => <div className="icon">{children}</div>;
 const TrueIcon: React.FC = () => (
   <Icon>
     <TrueIconSVG className="icon-green" />
@@ -29,7 +27,7 @@ const FalseIcon: React.FC = () => (
 const BooleanType: React.FC<BooleanTypeProps> = ({ data, as = "icon" }) => {
   switch (as) {
     case "text":
-      return <>{booleanToString(data)}</>;
+      return <div>{booleanToString(data)}</div>;
     case "icon":
       return data ? <TrueIcon /> : <FalseIcon />;
     case "pill":

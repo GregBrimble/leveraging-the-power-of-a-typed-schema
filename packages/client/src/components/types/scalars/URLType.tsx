@@ -21,9 +21,11 @@ const URLType: React.FC<URLTypeProps> = ({ data, field }) => {
     : {};
 
   return (
-    <a href={urlToString(value)} className={"underline"} {...otherProps}>
-      {field.name?.value}
-    </a>
+    <div>
+      <a href={urlToString(value)} className={"underline"} {...otherProps}>
+        {field.name?.value}
+      </a>
+    </div>
   );
 };
 

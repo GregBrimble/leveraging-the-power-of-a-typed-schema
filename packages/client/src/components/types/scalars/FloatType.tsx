@@ -8,7 +8,7 @@ interface FloatTypeProps extends TypeAttributes {
 }
 
 const FloatType: React.FC<FloatTypeProps> = ({ data, fractionDigits = 2 }) => (
-  <>{floatToString(data, fractionDigits)}</>
+  <div>{floatToString(data, fractionDigits)}</div>
 );
 
 export default FloatType;

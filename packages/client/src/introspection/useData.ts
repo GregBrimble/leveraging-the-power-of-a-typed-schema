@@ -1,7 +1,7 @@
-import { useSchema } from "./SchemaProvider";
+import { useSchema } from "./schema/SchemaProvider";
 import { useState, useEffect } from "react";
 import { ApolloError, ApolloClient } from "apollo-boost";
-import { generateQueryAST } from "./generateQueryAST";
+import { generateQueryAST } from "./generation/generateQueryAST";
 import { GraphQLSchema, DocumentNode } from "graphql";
 
 interface _Data {
@@ -50,11 +50,11 @@ export const useData = (
       if (schema.schema) {
         try {
           query = query !== undefined ? query : generateQueryAST(schema.schema);
-          console.log(query, variables);
+          console.log("Making query...", query, variables);
           const { data } = await client.query({ query, variables });
           setData({
             loading: false,
-            query: query,
+            query,
             data: JSON.parse(JSON.stringify(data, sanitizeData)),
             schema: schema.schema
           });

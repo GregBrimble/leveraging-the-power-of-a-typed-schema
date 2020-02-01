@@ -9,7 +9,6 @@ const getTimeZone = (date: Date): string => dateToString(date, "Z");
 export const deconstructDate = (
   date: Date
 ): { date: string; time: string; timeZone: string } => {
-  console.log(date, getDate(date));
   return {
     date: getDate(date),
     time: getTime(date),

@@ -43,6 +43,7 @@ export const typeDefs = gql`
       before: String
       filter: UserFilter
     ): UserConnection!
+    user: User
   }
 `
 
@@ -67,6 +68,9 @@ export const resolvers = {
       }
 
       return paginate(filteredUsers, args)
+    },
+    user() {
+      return users[6]
     },
   },
 }

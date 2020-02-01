@@ -10,13 +10,14 @@ import {
 } from "../../../introspection/rendering/RenderTypedData";
 import { TypeAttributes } from "../scalars/TypeAttributes";
 import { FieldNode, VariableNode } from "graphql";
-import { useRenderOptions } from "../../../introspection/RenderOptionsProvider";
+import { useRenderOptions } from "../../../introspection/rendering/RenderOptionsProvider";
 import {
   getNodeDataName,
   getField,
   getFields
 } from "../../../introspection/tools";
 import StringInput from "../../inputs/scalars/StringInput";
+import BooleanInput from "../../inputs/scalars/BooleanInput";
 
 interface ConnectionProps<T> extends TypeAttributes {
   data: ConnectionType<T>;
@@ -47,7 +48,7 @@ const Connection: React.FC<ConnectionProps<any>> = ({ data, field }) => {
       });
       setVariables({ ...variables, ...args });
     }
-  }, [connectionArguments, field, setVariables, variables]);
+  }, [connectionArguments, field, setVariables]);
 
   if (nodeTypeMap.loading) return <LoadingRenderer />;
   const nodeField = getField(field, "edges.node");
@@ -55,18 +56,34 @@ const Connection: React.FC<ConnectionProps<any>> = ({ data, field }) => {
   const fields = getFields(nodeField, nodeTypeMap.map);
   return (
     <div className="flex flex-col mx-8">
-      <fieldset>
-        <StringInput
-          onChange={value => {
-            setConnectionArguments({
-              filter: { firstNameFilter: value },
-              after: undefined,
-              before: undefined
-            });
-          }}
-        />
+      <fieldset className="p-6 bg-gray-200 m-6">
+        <div>
+          <label>firstNameFilter: </label>
+          <StringInput
+            onChange={value => {
+              setConnectionArguments({
+                filter: { firstNameFilter: value },
+                after: undefined,
+                before: undefined
+              });
+            }}
+          />
+        </div>
+        <div>
+          <label>isAlive: </label>
+          <BooleanInput
+            onChange={value => {
+              console.log("CHANGED");
+              setConnectionArguments({
+                filter: { isAlive: value },
+                after: undefined,
+                before: undefined
+              });
+            }}
+          />
+        </div>
       </fieldset>
-      <table className="table-auto w-full">
+      <table className="table-auto w-full m-4">
         <thead>
           <tr>
             {fields.map(field => {

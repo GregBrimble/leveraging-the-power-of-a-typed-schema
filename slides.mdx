@@ -1,0 +1,249 @@
+import { future } from 'mdx-deck/themes'
+import { Notes, Split, Horizontal, Image, Appear } from 'mdx-deck'
+
+export const theme = future
+
+## Leveraging the Power of a Typed Schema:<br />Designing User Interfaces with GraphQL
+
+> Greg Brimble
+
+<Notes>
+Hi. My name is Greg Brimble, and I'm going to be giving this talk entitled "Leveraging the Power of a Typed Schema: Designing User Interfaces with GraphQL". It's a bit of a mouthful, but we'll break it down as we go.
+
+I'd first like to thank Kristian arranging this conference and for inviting me to present. I hope you all find this talk interesting.
+
+If you have any questions or anything, I'll be in the Live Chat as this airs, so feel free to drop a message.
+
+Otherwise, if you're watching this after-the-fact, my contact info is on the final slide, so feel free to just get in touch.
+</Notes>
+
+---
+
+# Automatically Consistent User Interfaces
+
+<Appear>
+
+# Reduces Development Time
+
+</Appear>
+
+<Notes>
+Imagine you've got two engineering teams, front-end and back-end. Obviously a lot of planning and collaboration is required to for these teams to work together, and often, they're a bit out-of-sync: the back-end team might have built features that aren't yet available in the production app, or the front-end team are waiting on one last little thing before they can ship their feature.
+
+So, the goal today is to create automatically consistent UIs. We don't want to have to do front-end development everytime we make a back-end change. We want to see this handled automatically.
+
+It saves us doing work twice. This is all in aid of reducing development time.
+</Notes>
+
+---
+
+# (Optionally) Follow Along Live
+
+- <a href="https://bit.ly/typedschemacode" target="_blank" rel="noopener noreferrer">GitHub: bit.ly/typedschemacode</a>
+- <a href="https://bit.ly/typedschemademo" target="_blank" rel="noopener noreferrer">Demo: bit.ly/typedschemademo</a>
+
+---
+
+# Atomic Design
+
+<a href="http://atomicdesign.bradfrost.com/chapter-2/" target="_blank" rel="noopener noreferrer">
+<figure>
+<img src="http://atomicdesign.bradfrost.com/images/content/instagram-atomic.png" />
+<figcaption><small>© Brad Frost</small></figcaption>
+</figure>
+</a>
+
+---
+
+# Inbuilt GraphQL Types
+
+```
+scalar Int
+
+scalar Float
+
+scalar String
+
+scalar Boolean
+
+scalar ID
+```
+
+---
+
+# Custom Scalars
+
+`npm install --save graphql-scalars`
+
+```
+scalar DateTime
+
+scalar EmailAddress
+
+scalar PhoneNumber
+
+scalar URL
+
+# etc.
+```
+
+<a href="https://github.com/Urigo/graphql-scalars" target="_blank" rel="noopener noreferrer">GitHub</a>
+
+---
+
+# Atomic Types
+
+```
+scalar String   --> <span>
+scalar URL      --> <a>
+scalar ImageURL --> <img>
+```
+
+---
+
+# Introspection
+
+```
+query IntrospectionQuery {
+  __schema {
+    queryType { name }
+    mutationType { name }
+    subscriptionType { name }
+    types {
+      ...FullType
+    }
+    directives {
+      name
+      description
+      locations
+      args {
+        ...InputValue
+      }
+    }
+  }
+}
+
+# etc.
+```
+
+---
+
+<Image src="https://i.imgur.com/YkxbCGt.png" />
+
+---
+
+# GraphQL Voyager
+
+<a href="https://github.com/APIs-guru/graphql-voyager" target="_blank" rel="noopener noreferrer">
+<figure>
+<img src="https://i.imgur.com/3QnNhQb.png" style="height: 1400px" />
+<figcaption><small>GitHub</small></figcaption>
+</figure>
+</a>
+
+---
+
+# Rendering GraphQL Types
+
+---
+
+# Rendering GraphQL Types
+
+1. *Developer:* Register React components to specific GraphQL types
+
+## Preparation
+
+1. *Root:* Execute inspection query
+
+1. *Root:* Parse result and store GraphQL type information in React context
+
+---
+
+# Rendering GraphQL Types
+
+## Rendering
+
+1. *Root:* Execute data query
+
+1. *Root:* For each field in result, pass returned data and field information to *Renderer*
+
+1. *Renderer:* Reconcile the field with its GraphQL type using *Root* React context
+
+1. *Renderer:* Lookup registered components in *Root* React context
+    1. If type is registered, render with data and field information
+    1. If type isn't registered and it is an object, expand its fields and repeat from step two
+    1. Otherwise, if its a scalar type that isn't registered, render with default component or throw error
+
+---
+
+# Rendering GraphQL Inputs
+
+---
+
+# Rendering GraphQL Inputs
+
+1. *Developer:* Registerer React components to specific GraphQL types **and inputs**
+
+## Preparation
+
+1. ***Root*: `const [variables, setVariables] = useState()`**
+
+1. *Root:* Execute introspection query
+
+1. *Root:* Parse result and store GraphQL type **and input** information in React context
+
+---
+
+# Rendering GraphQL Inputs
+
+## Rendering
+
+1. *Root:* Execute data query
+
+1. *Root:* For each field in result, pass returned data and field information to *Renderer*
+
+1. *Renderer:* Reconcile the field with its GraphQL type using *Root* React context
+
+1. ***Renderer:* If the GraphQL type has input arguments:**
+    1. **Lookup registered components in *Root* React context**
+    1. **Render with data, field information and make `onChange` to call `setVariables`**
+
+1. *Renderer:* Lookup registered components in *Root* React context
+    1. If type is registered, render with data and field information
+    1. If type isn't registered and it is an object, expand its fields and repeat from step two
+    1. Otherwise, if its a scalar type that isn't registered, render with default component or throw error
+
+---
+
+# Use Cases
+
+- Input Forms (e.g. Checkout)
+
+- Data-rich Pages (e.g. Contacts)
+
+- Tables (filtering, sorting, etc.)
+
+- Admin Dashboards
+
+    - Mutations
+
+---
+
+# Further Reading
+
+- <a href="http://atomicdesign.bradfrost.com/chapter-2/" target="_blank" rel="noopener noreferrer">Brad Frost's Atomic Design</a>
+- <a href="https://graphql.org/learn/schema/#scalar-types" target="_blank" rel="noopener noreferrer">GraphQL Scalar Types</a>
+- <a href="https://graphql.org/learn/introspection/" target="_blank" rel="noopener noreferrer">GraphQL Introspection</a>
+- <a href="https://github.com/APIs-guru/graphql-voyager" target="_blank" rel="noopener noreferrer">GraphQL Voyager</a>
+- <a href="https://storybook.js.org/" target="_blank" rel="noopener noreferrer">Storybook</a>
+- <a href="https://tailwindcss.com/" target="_blank" rel="noopener noreferrer">Tailwind CSS</a>
+
+---
+
+# Contact
+
+`@gregbrimble`
+
+<a href="https://gregbrimble.com/" target="_blank" rel="noopener noreferrer">gregbrimble.com</a>
+
+<a href="mailto:hello@gregbrimble.com" target="_blank" rel="noopener noreferrer">hello@gregbrimble.com</a>

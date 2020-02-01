@@ -1,7 +1,7 @@
 import React from "react";
-import { useSchema } from "../../introspection/SchemaProvider";
+import { useSchema } from "../../introspection/schema/SchemaProvider";
 import { printSchema, print } from "graphql";
-import { generateQueryAST } from "../../introspection/generateQueryAST";
+import { generateQueryAST } from "../../introspection/generation/generateQueryAST";
 
 export const DebugSchema: React.FC = () => {
   const schema = useSchema();

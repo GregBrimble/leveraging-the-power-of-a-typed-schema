@@ -1,18 +1,13 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   getNamedType,
   DocumentNode,
   OperationDefinitionNode,
   FieldNode,
-  visit,
   getNullableType,
-  isCompositeType,
-  isAbstractType,
   GraphQLList,
-  ArgumentNode,
-  VariableNode
+  ArgumentNode
 } from "graphql";
-import { get } from "lodash";
 import BooleanType from "../../components/types/scalars/BooleanType";
 import DateTimeType from "../../components/types/scalars/DateTimeType";
 import FloatType from "../../components/types/scalars/FloatType";
@@ -24,15 +19,17 @@ import PageInfo from "../../components/types/relay/PageInfo";
 import {
   RenderOptionsProvider,
   useRenderOptions
-} from "../RenderOptionsProvider";
+} from "./RenderOptionsProvider";
 import { TypeAttributes } from "../../components/types/scalars/TypeAttributes";
 import { getOperationDefinitionOrDie } from "apollo-utilities";
 import Connection from "../../components/types/relay/Connection";
-import { getNodeDataName, getField, getFields } from "../tools";
+import { getNodeDataName, getFields } from "../tools";
 import ImageURLType from "../../components/types/scalars/ImageURLType";
 import { useData } from "../useData";
 import { useApolloClient } from "@apollo/react-hooks";
-import StringInput from "../../components/inputs/scalars/StringInput";
+import UserType from "../../components/types/UserType";
+import { useSchema } from "../schema/SchemaProvider";
+import StatusType from "../../components/types/scalars/StatusType";
 
 export interface RenderFieldProps {
   data: any;
@@ -57,7 +54,9 @@ const registrations = new Map<
   ["URL", { type: URLType }],
   ["ImageURL", { type: ImageURLType }],
   ["PageInfo", { type: PageInfo }],
-  ["UserConnection", { type: Connection }]
+  ["UserConnection", { type: Connection }],
+  ["User", { type: UserType }],
+  ["Status", { type: StatusType }]
 ]);
 
 const RenderList: React.FC<RenderFieldProps> = ({ data, field }) => (
@@ -70,30 +69,7 @@ const RenderList: React.FC<RenderFieldProps> = ({ data, field }) => (
   </ul>
 );
 
-export const RenderField: React.FC<RenderFieldProps> = ({ data, field }) => {
-  const {
-    nodeTypeMap,
-    loadingRenderer: LoadingRenderer,
-    defaultRenderer: DefaultRenderer
-  } = useRenderOptions();
-  if (nodeTypeMap.loading) return <LoadingRenderer />;
-
-  const type = nodeTypeMap.map.get(field);
-  if (!type) return <DefaultRenderer data={data} field={field} />;
-
-  if (Array.isArray(data) && getNullableType(type) instanceof GraphQLList)
-    return <RenderList data={data} field={field} />;
-
-  const namedType = getNamedType(type);
-
-  const registration = registrations.get(namedType.name);
-  if (registration && registration.type) {
-    const TypedComponent = registration.type;
-    return <TypedComponent data={data} field={field} />;
-  }
-
-  return <RenderFields data={data} field={field} />;
-};
+// const RenderInput: React.FC<{ field: FieldNode }> = () => {};
 
 const RenderInputs: React.FC<{ field: FieldNode }> = ({ field }) => {
   const {
@@ -101,10 +77,12 @@ const RenderInputs: React.FC<{ field: FieldNode }> = ({ field }) => {
     useVariables: [variables, setVariables],
     loadingRenderer: LoadingRenderer
   } = useRenderOptions();
+  const schema = useSchema();
+  if (schema.loading) return <LoadingRenderer />;
   if (nodeTypeMap.loading) return <LoadingRenderer />;
 
+  console.log(schema.schema?.getQueryType()?.getFields().users);
   const type = nodeTypeMap.map.get(field);
-  console.log(field, type);
   if (!type)
     return (
       <span>
@@ -113,13 +91,58 @@ const RenderInputs: React.FC<{ field: FieldNode }> = ({ field }) => {
     );
 
   const namedType = getNamedType(type);
-  console.log();
+  // console.debug(namedType);
 
   const args = field.arguments;
   if (args !== undefined && args.length > 0)
-    return <div>{args.map(arg => arg.name.value)}</div>;
+    return (
+      <div>
+        {args.map(
+          arg => JSON.stringify(arg.name.value) + JSON.stringify(arg.value.kind)
+        )}{" "}
+        {JSON.stringify(namedType)}
+      </div>
+    );
 
   return <></>;
+};
+
+export const RenderField: React.FC<RenderFieldProps> = ({ data, field }) => {
+  const {
+    nodeTypeMap,
+    loadingRenderer: LoadingRenderer,
+    defaultRenderer: DefaultRenderer
+  } = useRenderOptions();
+  if (nodeTypeMap.loading) return <LoadingRenderer />;
+
+  // let inputs = <></>;
+  // if (field.kind === "Field") inputs = <RenderInputs field={field} />;
+
+  let types = <></>;
+  const type = nodeTypeMap.map.get(field);
+  if (type) {
+    if (Array.isArray(data) && getNullableType(type) instanceof GraphQLList) {
+      types = <RenderList data={data} field={field} />;
+    } else {
+      const namedType = getNamedType(type);
+      const registration = registrations.get(namedType.name);
+      if (registration && registration.type) {
+        const TypedComponent = registration.type;
+        types = <TypedComponent data={data} field={field} />;
+      } else {
+        types = <RenderFields data={data} field={field} />;
+      }
+    }
+  } else {
+    types = <DefaultRenderer data={data} field={field} />;
+  }
+
+  return (
+    <>
+      {/* {inputs} */}
+      {types}
+    </>
+  );
 };
 
 export const RenderFields: React.FC<{
@@ -136,14 +159,9 @@ export const RenderFields: React.FC<{
   } = useRenderOptions();
   if (nodeTypeMap.loading) return <LoadingRenderer />;
 
-  let inputs = <></>;
-  if (field.kind === "Field") inputs = <RenderInputs field={field} />;
-
-  let types = <DefaultRenderer data={data} field={field} />;
-
   const fields = getFields(field, nodeTypeMap.map);
   if (fields.length > 0)
-    types = (
+    return (
       <>
         {Object.entries(data).map(([name, data]) => {
           const field = fields.find(field => getNodeDataName(field) === name);
@@ -155,12 +173,7 @@ export const RenderFields: React.FC<{
       </>
     );
 
-  return (
-    <>
-      {inputs}
-      {types}
-    </>
-  );
+  return <DefaultRenderer data={data} field={field} />;
 };
 
 export const RenderTypedData: React.FC<{
@@ -180,6 +193,8 @@ export const RenderTypedData: React.FC<{
   if (data.error) return <span>Error</span>;
 
   const operationDefinitionNode = getOperationDefinitionOrDie(document);
+
+  console.log(operationDefinitionNode);
 
   return (
     <RenderOptionsProvider
