@@ -15,8 +15,8 @@
     "@types/lodash": "4.14.149",
     "@typescript-eslint/eslint-plugin": "2.18.0",
     "@typescript-eslint/parser": "2.19.0",
-    "apollo-server": "2.9.16",
-    "apollo-server-testing": "2.9.16",
+    "apollo-server": "2.10.0",
+    "apollo-server-testing": "2.10.0",
     "babel-jest": "25.1.0",
     "eslint": "6.8.0",
     "eslint-config-prettier": "6.9.0",
@@ -30,7 +30,7 @@
     "typescript": "3.7.5"
   },
   "dependencies": {
-    "apollo-server-cloudflare": "2.9.16",
+    "apollo-server-cloudflare": "2.10.0",
     "graphql": "14.6.0",
     "graphql-relay": "^0.6.0",
     "graphql-scalars": "^1.0.6",
