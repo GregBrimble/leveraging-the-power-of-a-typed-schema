@@ -30,7 +30,7 @@
     "typescript": "3.7.5"
   },
   "dependencies": {
-    "apollo-server-cloudflare": "2.9.16",
+    "apollo-server-cloudflare": "2.10.0",
     "graphql": "14.6.0",
     "graphql-relay": "^0.6.0",
     "graphql-scalars": "^1.0.6",
